@@ -1,5 +1,5 @@
 package me.mocherif.fileupload.payment;
 
 public enum PaymentType {
-    CASH, TRANSFER
+    CASH, TRANSFER, CHECK, DEPOSIT
 }
