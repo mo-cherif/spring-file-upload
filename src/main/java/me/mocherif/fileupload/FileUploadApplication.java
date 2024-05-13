@@ -2,6 +2,7 @@ package me.mocherif.fileupload;
 
 import me.mocherif.fileupload.payment.Payment;
 import me.mocherif.fileupload.payment.PaymentRepos;
+import me.mocherif.fileupload.payment.PaymentStatus;
 import me.mocherif.fileupload.payment.PaymentType;
 import me.mocherif.fileupload.student.Student;
 import me.mocherif.fileupload.student.StudentRepos;
@@ -38,6 +39,7 @@ public class FileUploadApplication {
 							.dateTime(LocalDateTime.now())
 							.paymentType(paymentTypes[index])
 							.file(UUID.randomUUID().toString())
+							.paymentStatus(PaymentStatus.CREATED)
 							.student(student)
 							.build();
 					paymentRepos.save(payment);

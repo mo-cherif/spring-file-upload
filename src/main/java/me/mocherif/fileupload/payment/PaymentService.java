@@ -5,6 +5,8 @@ import me.mocherif.fileupload.student.Student;
 import me.mocherif.fileupload.student.StudentRepos;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -62,6 +64,12 @@ public class PaymentService {
         String filePath = payment.getFile();
         return Files.readAllBytes(Path.of(URI.create(filePath)));
 
+    }
+
+    public Payment updatePaymentStatus(PaymentStatus paymentStatus, Long paymentId) {
+        Payment payment = paymentRepos.findById(paymentId).get();
+        payment.setPaymentStatus(paymentStatus);
+        return paymentRepos.save(payment);
     }
 
 }

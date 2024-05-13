@@ -17,6 +17,7 @@ import java.util.List;
 public class StudentController {
     private PaymentService paymentService;
     private StudentService  studentService;
+    private PaymentRepos paymentRepos;
 
     @GetMapping("/payments")
     public List<Payment> allPayment() {
@@ -52,5 +53,10 @@ public class StudentController {
     @GetMapping(value = "/paymentFile/{paymentid}", produces = MediaType.APPLICATION_PDF_VALUE)
     public byte [] getPaymentFile(@PathVariable Long paymentid) throws IOException {
         return paymentService.getPaymentFile(paymentid);
+    }
+
+    @PutMapping("/payments/update/{paymentId}")
+    public Payment updatePaymentStatus(@RequestParam  PaymentStatus paymentStatus,@PathVariable Long paymentId) {
+        return paymentService.updatePaymentStatus(paymentStatus, paymentId);
     }
 }
