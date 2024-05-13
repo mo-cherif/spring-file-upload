@@ -3,10 +3,8 @@ package me.mocherif.fileupload.payment;
 import lombok.AllArgsConstructor;
 import me.mocherif.fileupload.student.Student;
 import me.mocherif.fileupload.student.StudentRepos;
-import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -19,6 +17,8 @@ import java.util.List;
 import java.util.UUID;
 
 @AllArgsConstructor
+@Service
+@Transactional
 public class PaymentService {
     public PaymentRepos paymentRepos;
     public StudentRepos studentRepos;
@@ -27,7 +27,7 @@ public class PaymentService {
         return paymentRepos.findAll();
     }
 
-    private Payment findById( Long id) {
+    public Payment findById( Long id) {
         return paymentRepos.findById(id).get();
     }
 
@@ -53,7 +53,6 @@ public class PaymentService {
                 .paymentStatus(PaymentStatus.CREATED)
                 .file(filepath.toUri().toString())
                 .build();
-
         return paymentRepos.save(payment);
     }
 
