@@ -23,21 +23,19 @@ public class PaymentService {
     public PaymentRepos paymentRepos;
     public StudentRepos studentRepos;
 
-    @GetMapping("/payments")
     public List<Payment> allPayment() {
         return paymentRepos.findAll();
     }
 
-    @GetMapping("/payments/{id}")
-    private Payment findById(@PathVariable Long id) {
+    private Payment findById( Long id) {
         return paymentRepos.findById(id).get();
     }
 
-    public List<Payment> findByStudentCode(@PathVariable String code) {
+    public List<Payment> findByStudentCode( String code) {
         return paymentRepos.findByStudentCode(code);
     }
 
-    public Payment savePayment(@RequestParam MultipartFile file, LocalDate date,
+    public Payment savePayment(MultipartFile file, LocalDate date,
                                double amount, PaymentType type, String studentCode) throws IOException {
 
         var path = Paths.get(System.getProperty("user.home"), "student-app-files", "payments");
@@ -59,8 +57,8 @@ public class PaymentService {
         return paymentRepos.save(payment);
     }
 
-    @GetMapping(value = "/paymentFile/{paymentid}", produces = MediaType.APPLICATION_PDF_VALUE)
-    public byte [] getPaymentFile(@PathVariable Long paymentid) throws IOException {
+
+    public byte [] getPaymentFile(Long paymentid) throws IOException {
         Payment payment = paymentRepos.findById(paymentid).get();
         String filePath = payment.getFile();
         return Files.readAllBytes(Path.of(URI.create(filePath)));
